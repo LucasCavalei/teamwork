@@ -3,9 +3,14 @@ import { useForm } from 'react-hook-form';
 
 import './index.scss';
 import '../../Home/style.scss';
-
+import axios from 'axios';
 export const Signup = () => {
   const { register, handleSubmit } = useForm();
+
+  const sendData = async (userData) => {
+    const res = await axios.post('http://localhost:8888/user/signup', userData);
+    console.log('---- res from axios.post.user', res);
+  };
 
   const onSubmit = (e) => {
     const userData = {
@@ -13,6 +18,7 @@ export const Signup = () => {
       email: e.email,
       password: e.password,
     };
+    sendData(userData);
   };
   return (
     <div className="container">

@@ -1,7 +1,7 @@
 import express from 'express';
-import Signup from '../controllers/user/userSignupController.js';
-import Login from '../controllers/user/userLoginController.js';
-import { expressAdapter } from '../express-adapter.js';
+import Signup from '../usecases/signup-user';
+import Login from '../usecases/login-user';
+import { expressAdapter } from '../express-adapter';
 const userRouter = express.Router();
 
 const signup = new Signup();
