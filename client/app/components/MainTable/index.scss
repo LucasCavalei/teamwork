@@ -1,4 +1,4 @@
-.post-container {
+.table-container {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -8,9 +8,4 @@
   padding: 0;
   box-sizing: border-box;
   outline: 0;
-  .post-text {
-    border: solid 5px rgb(0, 255, 0);
-    padding: 40px;
-    margin: -2b 0px;
-  }
 }

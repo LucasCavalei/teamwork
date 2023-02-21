@@ -17,14 +17,15 @@
     #f3c6f1 90.85%
   );
   .appGlass {
-    display: grid;
+    display: flex;
     background: rgba(255, 255, 255, 0.54);
     height: 94%;
     width: 94%;
+    // flex-wrap: wrap;
     border-radius: 2rem;
-    display: grid;
+    // display: grid;
     gap: 16px;
-    grid-template-columns: 11rem auto 20rem;
+    // grid-template-columns: 11rem auto 20rem;
     overflow: hidden;
   } // * {
 }

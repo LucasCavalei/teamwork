@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import { data } from '../../../json';
+import TextField from '@mui/material/TextField';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,32 +11,25 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import './index.scss';
 
-export const Post = () => {
-  // const backgroundColor = ['red', 'blue', 'green', 'yellow', 'purple'];
+export const MainTable = () => {
+  const [description, setDescription] = useState('');
+
+  const handleSubmit = () => {
+    const date_time = '2023-02-21 12:34:56';
+    // const description2 = 'saSDASDASDASDAssssssssSDAS';
+    const taskData = { date_time, description };
+    axios.post('http://localhost:8888/task', taskData);
+  };
   const backgroundColor = [
     'linear-gradient(106.37deg, #ffe1bc 29.63%, #ffcfd1 51.55%, #f3c6f1 90.85%)',
     '(180deg, #BB67FF 0%, #C484F3 100%)',
   ];
 
-  // return (
-  //   <div className="post-container">
-  //     {data.map((res, index) => (
-  //       <h3
-  //         className="post-text"
-  //         style={{
-  //           backgroundImage: backgroundColor[index % backgroundColor.length],
-  //         }}
-  //       >
-  //         {res.text}
-  //       </h3>
-  //     ))}
-  //   </div>
-  // );
   return (
-    <div className="post-container">
+    <div className="table-container">
       <TableContainer
         component={Paper}
-        style={{ boxShadow: '0px 13px 20px 0px #80808029' }}
+        style={{ boxShadow: '0px 13px 20px 0px #80808029', height: '300px' }}
       >
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -70,7 +65,14 @@ export const Post = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      //{' '}
+      <TextField
+        id="outlined-basic"
+        label="Nova Tarefa"
+        variant="outlined"
+        style={{ width: '100%' }}
+        onChange={(event) => setDescription(event.target.value)}
+      />{' '}
+      <button onClick={handleSubmit}>Submit</button>
     </div>
   );
 };
