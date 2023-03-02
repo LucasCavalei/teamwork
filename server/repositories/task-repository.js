@@ -1,5 +1,5 @@
 import connection from '../utils/database';
-// import mysql from 'mysql';
+import mysql from 'mysql';
 // const connection = mysql.createConnection({
 //   host: 'localhost',
 //   user: 'root',
@@ -15,22 +15,48 @@ import connection from '../utils/database';
 
 class Task {
   add(req, res) {
-    const { date_time, description } = req.body;
-
-    const INSERT_USER_QUERY = `INSERT INTO task_table (date_time, description) VALUES (?, ?)`;
-    connection.query(
-      INSERT_USER_QUERY,
-      [date_time, description],
-      (err, resultados) => {
-        if (err) {
-          // return res.send(err)
-          console.log('sou errros temporary', err);
-        } else {
-          // return res.send('usuario adicionado com sucesso');
-          console.log('FOI TUDO BEM ADDICIONOU');
+    const { date_time, description, status } = req.body;
+    console.log('----chega??=-----', description, date_time, status);
+    const INSERT_TASK_QUERY = `INSERT INTO task_table (date_time, description, status) VALUES (?, ?, ?)`;
+    try {
+      connection.query(
+        INSERT_TASK_QUERY,
+        [date_time, description, status],
+        (err, result) => {
+          if (err) {
+            console.log('nao adicionou', err);
+            return res.send(err);
+          } else {
+            connection.query(
+              'SELECT * FROM task_table WHERE id = ?',
+              [result.insertId],
+              (err, rows) => {
+                if (err) {
+                  console.log('erro ao recuperar tarefa', err);
+                  return res.send(err);
+                } else {
+                  console.log('adicionou', rows[0]);
+                  return res.send(rows[0]);
+                }
+              }
+            );
+          }
         }
+      );
+    } catch (err) {
+      console.log('Error while adding task:', err);
+      //   res.status(500).send('Error while adding task');
+    }
+  }
+
+  getAll(req, res) {
+    connection.query('SELECT * FROM task_table', (err, resultados) => {
+      if (err) {
+        return res.send(err);
+      } else {
+        return res.json(resultados);
       }
-    );
+    });
   }
 }
 export default Task;

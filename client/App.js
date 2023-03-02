@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Home } from './components/Home';
-import { Signup } from './components/forms/signup/index';
+import { Home } from './src/pages/Home';
+import { Signup } from './src/pages/signup';
 
 const App = () => {
   return (

@@ -1,0 +1,32 @@
+// .table-container {
+//   // display: flex;
+//   // justify-content: center;
+//   // flex-wrap: wrap;
+//   // align-items: center;
+//   // flex-direction: row;
+//   // margin: 0;
+//   // padding: 0;
+//   // box-sizing: border-box;
+//   // outline: 0;
+// }
+.table-container-accordion {
+  overflow: auto;
+}
+
+.table-container-accordion::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.table-container-accordion::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+
+.table-container-accordion::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.table-container-accordion::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}
