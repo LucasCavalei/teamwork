@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import TextField from '@mui/material/TextField';
+import taskService from '../../services';
 
 import './index.scss';
 // --------------------
@@ -9,6 +9,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { StatusSelect } from '../../components/statusSelect';
 
 export const TableMotion = () => {
   const [description, setDescription] = useState('');
@@ -17,18 +18,20 @@ export const TableMotion = () => {
   useEffect(() => {
     getData();
   }, []);
+
   const getData = async () => {
-    const result = await axios.get('http://localhost:8888/task');
-    setResponse(result.data);
+    const taskResult = await taskService.getAll();
+    setResponse(taskResult);
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const date_time = '2023-02-21 12:34:56';
-    const status = 'To Do';
-    const taskData = { date_time, description, status };
+    const created_at = '2023-02-21 12:34:56';
+    const status = 'Doing';
+    const name = 'is okland canada?';
+    const taskData = { name, description, status, created_at };
     try {
-      const result = await axios.post('http://localhost:8888/task', taskData);
-      setResponse([...response, result.data]);
+      const newTask = await taskService.createTask(taskData);
+      setResponse([...response, newTask]);
       if (!res) {
         console.log('falha ao consoloar');
       }
@@ -47,23 +50,27 @@ export const TableMotion = () => {
     <div className="table-container-accordion">
       {response
         .map((res, index) => (
-          <Accordion style={{ maxWidth: '700px' }}>
+          <Accordion key={res.id} style={{ maxWidth: '700px' }}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
               <Typography style={{ maxWidth: '400px', maxHeight: '100px' }}>
-                {res.id} <br />
+                {res.name} <br />
                 <br />
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
+              <Typography
+                style={{ wordWrap: 'break-word', overflowWrap: 'break-word' }}
+              >
                 {' '}
+                {res.id}
                 {res.description}
-                {res.date_time}
                 {res.status}
+                {res.created_at}
+                <StatusSelect data={res} />
               </Typography>
             </AccordionDetails>
           </Accordion>

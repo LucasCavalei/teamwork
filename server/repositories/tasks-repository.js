@@ -15,18 +15,19 @@ import mysql from 'mysql';
 
 class Task {
   add(req, res) {
-    const { date_time, description, status } = req.body;
-    console.log('----chega??=-----', description, date_time, status);
-    const INSERT_TASK_QUERY = `INSERT INTO task_table (date_time, description, status) VALUES (?, ?, ?)`;
+    const { name, description, status, created_at } = req.body;
+    const INSERT_TASK_QUERY = `INSERT INTO task_table (name, description, status, created_at) VALUES (?, ?, ?, ?)`;
     try {
       connection.query(
         INSERT_TASK_QUERY,
-        [date_time, description, status],
+        [name, description, status, created_at],
         (err, result) => {
           if (err) {
             console.log('nao adicionou', err);
             return res.send(err);
           } else {
+            console.log('result in add', result);
+
             connection.query(
               'SELECT * FROM task_table WHERE id = ?',
               [result.insertId],
@@ -58,5 +59,38 @@ class Task {
       }
     });
   }
+  update(req, res) {
+    console.log('chamoui!');
+    const { name, description, status } = req.body;
+    const id = req.params.id;
+    console.log(name, description, status);
+    const query =
+      'UPDATE task_table SET name = ?, description = ?, status = ? WHERE id = ?';
+    const values = [name, description, status, id];
+    connection.query(query, values, (err, result) => {
+      if (err) {
+        throw err;
+      } else {
+        console.log('result', result);
+        connection.query(
+          'SELECT * FROM task_table WHERE id = ?',
+          [id],
+          (err, rows) => {
+            if (err) {
+              return res.send(err);
+            } else {
+              return res.send(rows[0]);
+              console.log('EDITOU', rows[0]);
+            }
+          }
+        );
+      }
+    });
+  }
+  //   // close the connection to the database
+  //   connection.end((err) => {
+  //     if (err) throw err;
+  //     console.log('Connection closed');
+  // },
 }
 export default Task;
