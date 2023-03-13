@@ -15,6 +15,7 @@ async function getAllTasks() {
 }
 
 async function createTask(task) {
+  console.log('createTask axios methoid', task);
   const response = await api.post('/tasks', task);
   return response.data;
 }

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import TextField from '@mui/material/TextField';
 import taskService from '../../services';
-
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 import './index.scss';
 // --------------------
 import Accordion from '@mui/material/Accordion';
@@ -12,8 +13,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { StatusSelect } from '../../components/statusSelect';
 
 export const TableMotion = () => {
+  const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [response, setResponse] = useState([]);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     getData();
@@ -25,12 +28,13 @@ export const TableMotion = () => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const created_at = '2023-02-21 12:34:56';
-    const status = 'Doing';
-    const name = 'is okland canada?';
-    const taskData = { name, description, status, created_at };
+
+    const status = 'To Do';
+    const taskData = { name, description, status };
+    console.log(taskData);
     try {
-      const newTask = await taskService.createTask(taskData);
+      const newTask = await taskService.create(taskData);
+      console.log('sou new task ulyima', newTask);
       setResponse([...response, newTask]);
       if (!res) {
         console.log('falha ao consoloar');
@@ -40,6 +44,9 @@ export const TableMotion = () => {
       // setResponse([...response, taskData]);
     }
   };
+  function handleClick() {
+    inputRef.current.focus();
+  }
 
   const backgroundColor = [
     'linear-gradient(106.37deg, #ffe1bc 29.63%, #ffcfd1 51.55%, #f3c6f1 90.85%)',
@@ -48,6 +55,9 @@ export const TableMotion = () => {
 
   return (
     <div className="table-container-accordion">
+      <Fab color="primary" aria-label="add" onClick={handleClick}>
+        <AddIcon />
+      </Fab>
       {response
         .map((res, index) => (
           <Accordion key={res.id} style={{ maxWidth: '700px' }}>
@@ -77,6 +87,13 @@ export const TableMotion = () => {
         ))
         .reverse()}
       <TextField
+        id="standard-basic"
+        label="Standard"
+        variant="standard"
+        inputRef={inputRef}
+        onChange={(event) => setName(event.target.value)}
+      />
+      <TextField
         id="outlined-basic"
         label="Nova Tarefa"
         variant="outlined"
@@ -87,42 +104,3 @@ export const TableMotion = () => {
     </div>
   );
 };
-// function Task(props) {
-//   const taskStatus = props.status;
-
-//   let statusColor = '';
-
-//   switch (taskStatus) {
-//     case 'To Do':
-//       statusColor = 'red';
-//       break;
-//     case 'In Progress':
-//       statusColor = 'orange';
-//       break;
-//     case 'Done':
-//       statusColor = 'green';
-//       break;
-//     default:
-//       statusColor = 'black';
-//   }
-
-//   return (
-//     <div>
-//       <p style={{color: statusColor}}>Task Status: {taskStatus}</p>
-//     </div>
-//   );
-// }
-
-// export default Task;
-
-// -----------MYSQL--------------
-
-// CREATE TABLE tasks (
-//   id INT NOT NULL AUTO_INCREMENT,
-//   name VARCHAR(255) NOT NULL,
-//   description TEXT,
-//   status ENUM('To Do', 'In Progress', 'Done') NOT NULL,
-//   PRIMARY KEY (id)
-// );
-
-// ALTER TABLE my_table ADD COLUMN status ENUM('To Do', 'In Progress', 'Done');

@@ -1,26 +1,13 @@
-import connection from '../utils/database';
-import mysql from 'mysql';
-// const connection = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'root',
-//   password: '123456',
-//   database: 'worktogether',
-// });
-
-// connection.connect((err) => {
-//   if (err) {
-//     return err;
-//   }
-// });
+import { db, MySQL } from '../utils/database';
 
 class Task {
   add(req, res) {
-    const { name, description, status, created_at } = req.body;
-    const INSERT_TASK_QUERY = `INSERT INTO task_table (name, description, status, created_at) VALUES (?, ?, ?, ?)`;
+    const { name, description, status } = req.body;
+    const INSERT_TASK_QUERY = `INSERT INTO task_table (name, description, status) VALUES (?, ?, ?)`;
     try {
       connection.query(
         INSERT_TASK_QUERY,
-        [name, description, status, created_at],
+        [name, description, status],
         (err, result) => {
           if (err) {
             console.log('nao adicionou', err);

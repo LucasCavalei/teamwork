@@ -12,10 +12,13 @@ export const StatusSelect = ({ data }) => {
   const [buttonColor, setButtonColor] = React.useState('green');
 
   const { name, description, status, id } = data;
-  console.log('----------sou status hein', status);
-  function myfunc() {}
-  myfunc();
-  // QUERO MANDAARM, FAZER UM AXIOS TALVES ROTA DE EDITAR STATUS
+
+  // setNewStatus(status);
+  // setNewStatus([...newStatus, status]);
+  React.useEffect(() => {
+    setNewStatus(status);
+  }, []);
+
   const handleChange = async (event) => {
     const task = {
       name,
@@ -27,6 +30,7 @@ export const StatusSelect = ({ data }) => {
     try {
       const updatedTask = await taskService.update(task);
       // // setNewStatus([...newStatus, updatedTask]);
+      console.log('sou updated task', updatedTask.status);
       setNewStatus(updatedTask.status);
 
       if (!updatedTask) {
@@ -37,6 +41,7 @@ export const StatusSelect = ({ data }) => {
       throw new Error('erro ao postar', err);
       // setResponse([...response, tasksData]);
     }
+    // setNewStatus(status);
   };
   // const minhafunction = () => {};
   return (
@@ -44,7 +49,21 @@ export const StatusSelect = ({ data }) => {
       <FormControl
         sx={{ m: 1, minWidth: 120 }}
         style={{
-          backgroundColor: newStatus || status === 'To Do' ? 'green' : null,
+          backgroundColor:
+            newStatus === 'To Do'
+              ? 'orange'
+              : newStatus === 'doing'
+              ? 'pink'
+              : newStatus === 'In progress'
+              ? 'grey'
+              : null,
+          //     status === 'To Do'
+          //       ? 'green'
+          //       : status === 'doing'
+          //       ? 'orange'
+          //       : status === 'In progress'
+          //       ? 'grey'
+          //       : null,
         }}
       >
         <InputLabel id="demo-simple-select-label">
