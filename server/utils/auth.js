@@ -35,4 +35,5 @@ class Authorization {
     return null;
   }
 }
-export default Authorization;
+const auth = new Authorization();
+export { auth };

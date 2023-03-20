@@ -1,48 +1,42 @@
-import { db, MySQL } from '../utils/database';
+import connection from '../utils/database';
 
 class Task {
-  add(req, res) {
-    const { name, description, status } = req.body;
+  add(request, response) {
+    const { name, description, status } = request.body;
     const INSERT_TASK_QUERY = `INSERT INTO task_table (name, description, status) VALUES (?, ?, ?)`;
-    try {
-      connection.query(
-        INSERT_TASK_QUERY,
-        [name, description, status],
-        (err, result) => {
-          if (err) {
-            console.log('nao adicionou', err);
-            return res.send(err);
-          } else {
-            console.log('result in add', result);
+    const params = [name, description, status];
 
-            connection.query(
-              'SELECT * FROM task_table WHERE id = ?',
-              [result.insertId],
-              (err, rows) => {
-                if (err) {
-                  console.log('erro ao recuperar tarefa', err);
-                  return res.send(err);
-                } else {
-                  console.log('adicionou', rows[0]);
-                  return res.send(rows[0]);
-                }
+    try {
+      connection.query(INSERT_TASK_QUERY, params, (err, result) => {
+        if (err) {
+          return response.send(err);
+        } else {
+          console.log('result in add', result.insertId);
+
+          connection.query(
+            'SELECT * FROM task_table WHERE id = ?',
+            [result.insertId],
+            (err, rows) => {
+              if (err) {
+                return response.send(err);
+              } else {
+                return response.send(rows[0]);
               }
-            );
-          }
+            }
+          );
         }
-      );
+      });
     } catch (err) {
-      console.log('Error while adding task:', err);
-      //   res.status(500).send('Error while adding task');
+      response.status(500).send('Error while adding task');
     }
   }
 
   getAll(req, res) {
-    connection.query('SELECT * FROM task_table', (err, resultados) => {
+    connection.query('SELECT * FROM task_table', (err, result) => {
       if (err) {
         return res.send(err);
       } else {
-        return res.json(resultados);
+        return res.json(result);
       }
     });
   }
@@ -67,7 +61,6 @@ class Task {
               return res.send(err);
             } else {
               return res.send(rows[0]);
-              console.log('EDITOU', rows[0]);
             }
           }
         );

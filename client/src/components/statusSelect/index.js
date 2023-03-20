@@ -4,7 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import taskService from '../../services';
+import taskService from '../../services/apiService';
 import axios from 'axios';
 
 export const StatusSelect = ({ data }) => {
@@ -57,13 +57,6 @@ export const StatusSelect = ({ data }) => {
               : newStatus === 'In progress'
               ? 'grey'
               : null,
-          //     status === 'To Do'
-          //       ? 'green'
-          //       : status === 'doing'
-          //       ? 'orange'
-          //       : status === 'In progress'
-          //       ? 'grey'
-          //       : null,
         }}
       >
         <InputLabel id="demo-simple-select-label">

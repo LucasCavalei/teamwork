@@ -1,12 +1,14 @@
 import bcrypt from 'bcrypt';
 import User from '../repositories/userRepository';
+import { auth } from '../utils/auth';
 
-//AFTER i CAN CREATE SOMETHING LIKE HOLDS THIS , LIKE WE HAVE IN CLEAR ARCHITECTURE
+//after create dependency injectio to all these depnecies
 const user = new User();
 
 class UserController {
   async addUser(request, response) {
     const { name, email, password } = request.body;
+    console.log('name,email,password', name, email, password);
 
     if (!email || !password) {
       response.status(400).send('Senha e email não podem estar em branco');
@@ -22,7 +24,8 @@ class UserController {
       email,
       password: hashedPassword,
     });
-    response.status(200).send(createdUser);
+    const userToken = await auth.createToken(createdUser);
+    return response.status(200).send({ userToken });
   }
 }
 

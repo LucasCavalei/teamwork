@@ -17,6 +17,14 @@ class User {
           }
         );
       });
+
+      /*CÓDIGO INTERESSANTE QUE RETORNA DADOS APOS ADD, SEM PRECISAR FAZER SELECT PRA RETORNAR DADOS DO USUARIO ADICIONADO
+  const createUser = async (newUser) => {
+  const sql = "INSERT INTO users SET ?";
+  const result = await query(sql, newUser);
+  return { id: result.insertId, ...newUser };
+};
+*/
       const rows = await new Promise((resolve, reject) => {
         connection.query(
           'SELECT * FROM user_table WHERE id = ?',

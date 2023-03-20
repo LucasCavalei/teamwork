@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import TextField from '@mui/material/TextField';
-import taskService from '../../services';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import './index.scss';
-// --------------------
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -12,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { StatusSelect } from '../../components/statusSelect';
 
-export const TableMotion = () => {
+export const TableMotion = ({ apiService }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [response, setResponse] = useState([]);
@@ -23,7 +21,7 @@ export const TableMotion = () => {
   }, []);
 
   const getData = async () => {
-    const taskResult = await taskService.getAll();
+    const taskResult = await apiService.getAllTasks();
     setResponse(taskResult);
   };
   const handleSubmit = async (event) => {
@@ -31,14 +29,13 @@ export const TableMotion = () => {
 
     const status = 'To Do';
     const taskData = { name, description, status };
-    console.log(taskData);
     try {
-      const newTask = await taskService.create(taskData);
-      console.log('sou new task ulyima', newTask);
-      setResponse([...response, newTask]);
-      if (!res) {
-        console.log('falha ao consoloar');
+      const returnedTask = await apiService.createTask(taskData);
+      if (!returnedTask) {
+        console.log('Não retornou');
       }
+
+      setResponse([...response, returnedTask]);
     } catch (err) {
       throw new Error('erro ao postar');
       // setResponse([...response, taskData]);

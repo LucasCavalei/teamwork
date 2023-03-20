@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import apiService from '../../services/apiService';
+import GoogleButton from 'react-google-button';
 
 import './index.scss';
-import axios from 'axios';
 export const Signup = () => {
   const { register, handleSubmit } = useForm();
 
+const redirectToGoogleSS0 = async ()=>{
+const googleLoginUrl = 'https://localhost:8080'
+
+}
   const sendData = async (userData) => {
-    const res = await axios.post('http://localhost:8888/user/signup', userData);
-    console.log('---- res from axios.post.user', res);
+    await apiService.createUser(userData);
   };
 
   const onSubmit = (e) => {
@@ -38,6 +42,7 @@ export const Signup = () => {
         <button className="button button1" type="submit">
           Entrar
         </button>
+        <GoogleButton />
       </form>
     </div>
   );

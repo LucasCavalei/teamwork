@@ -8,6 +8,11 @@ const api = axios.create({
     'Content-Type': 'application/json',
   },
 });
+async function createUser(userData) {
+  const response = await api.post('/user/signup', userData);
+  localStorage.setItem('token', response.data);
+  // return response.data;
+}
 
 async function getAllTasks() {
   const response = await api.get('/tasks');
@@ -15,7 +20,6 @@ async function getAllTasks() {
 }
 
 async function createTask(task) {
-  console.log('createTask axios methoid', task);
   const response = await api.post('/tasks', task);
   return response.data;
 }
@@ -30,11 +34,12 @@ async function deleteTask(taskId) {
   return response.data;
 }
 
-const taskService = {
-  getAll: getAllTasks,
-  create: createTask,
+const apiService = {
+  getAllTasks: getAllTasks,
+  createTask: createTask,
+  createUser: createUser,
   update: updateTask,
   delete: deleteTask,
 };
 
-export default taskService;
+export default apiService;
