@@ -10,25 +10,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import './index.scss';
 export const Signup = () => {
   const { register, handleSubmit } = useForm();
-  //the user, esta dentro do configureStore authUser, Está no initialState
-  const { authUser } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  //busca usuario atraves isUserAuthenticated interception no backend
-  const fetchAuthUser = async () => {
-    const response = await axios
-      .get('http://localhost:8888/auth/user', { withCredentials: true })
-      .catch((err) => {
-        console.log('Erro ao buscar usuario autenticado', err);
-        dispatch(setIsAuthenticated(false));
-        dispatch(setAuthUser(null));
-      });
-    if (response && response.data) {
-      dispatch(setIsAuthenticated(true));
-      dispatch(setAuthUser(response.data));
-      navigate('/');
-    }
-  };
 
   const redirectToGoogleSSO = async () => {
     // in typescript

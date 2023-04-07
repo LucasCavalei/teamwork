@@ -17,6 +17,8 @@ app.use(express.static(path.join(__dirname, '../dist')));
 
 app.use(cors({ origin: 'http://localhost:8080', credentials: true }));
 
+app.use(cors({ origin: 'http://localhost:8080', credentials: true }));
+
 app.use(
   session({
     secret: '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',
@@ -37,10 +39,7 @@ app.use(passport.session());
 
 app.use(loginWithGoogleRouter);
 app.use(authUser);
-app.use(express.static(path.join(__dirname, '../dist')));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../dist/index.html'));
-});
+
 // app.use(
 //   cors({
 //     origin: 'https://localhost:8080',
