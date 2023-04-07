@@ -1,30 +1,63 @@
 import passport from 'passport';
 import GoogleStrategy from 'passport-google-oauth20';
-import express from 'express';
-i;
-import { app } from '../app';
-//   MINHA  'http://localhost:8888/api/session/oauth/google'
-// const GOOGLE_CLIENT_ID =
-//   '700452773389-6pcr1neof2gv152ifnl3consi7rc4fdt.apps.googleusercontent.com';
-// const GOOGLE_CLIENT_SECRET = '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';
+import dotenv from 'dotenv';
 
-// passport.use(
-//   new GoogleStrategy(
-//     {
-//       clientID: GOOGLE_CLIENT_ID,
-//       clientSecret: GOOGLE_CLIENT_SECRET,
-//       // callbackURL: 'https://www.example.com/oauth2/redirect/google',
-//       callbackURL: 'http://localhost:8888/auth/google/callback',
-//       // callbackURL: "http://127.0.0.1:1337/api/session/oauth/google",
-//       scope: ['profile'],
-//       state: true,
-//     },
-//     (accessToken, refreshToken, profile, done) => {
-//       console.log('Google OAuth strategy called with profile:', profile);
-//     }
-//   )
-// );
+dotenv.config();
+import connection from './database';
 
+passport.serializeUser(function (user, done) {
+  done(null, user);
+});
+// deserializeUser, para ser usada e fuincionar depende de...
+// const isAuthenticated = (req, res, next)
+passport.deserializeUser(function (user, done) {
+  done(null, user);
+});
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: 'http://localhost:8888/auth/google/callback',
+      scope: ['profile'],
+      state: true,
+    },
+    (accessToken, refreshToken, profile, done) => {
+      const userData = {
+        google_id: profile.id,
+        display_name: profile.displayName,
+        first_name: profile.name.givenName,
+        last_name: profile.name.familyName,
+        image: profile.photos[0].value,
+      };
+      saveUserToDatabase(userData);
+      done(null, profile);
+      // return done(null, profile);
+    }
+  )
+);
+
+const saveUserToDatabase = (userData) => {
+  const sql =
+    'INSERT INTO oauth_credentials (google_id, display_name, first_name, last_name, image) VALUES (?, ?, ?, ?, ?)';
+  const values = [
+    userData.google_id,
+    userData.display_name,
+    userData.first_name,
+    userData.last_name,
+    userData.image,
+  ];
+
+  connection.query(sql, values, (err, result) => {
+    if (err) throw err;
+    console.log('User data saved to database');
+  });
+
+  // close the database connection
+  // connection.end();
+};
+export default passport;
 // passport.serializeUser(function(user, cb) {
 //   process.nextTick(function() {
 //     cb(null, { id: user.id, username: user.username, name: user.name });
@@ -36,28 +69,11 @@ import { app } from '../app';
 //   });
 // });
 
-// var router = express.Router();
-// router.get('/oauth2/redirect/google', passport.authenticate('google', {
-//   successReturnToOrRedirect: '/',
-//   failureRedirect: '/login'
-// }));
-// router.get('/login/federated/google', passport.authenticate('google'));
-
-// router.get('/oauth2/redirect/google', passport.authenticate('google', {
-//   successReturnToOrRedirect: '/',
-//   failureRedirect: '/login'
-// }));
 // router.post('/logout', function(req, res, next) {
 //   req.logout();
 //   res.redirect('/');
 // });
 
-// export { passport,router };
-// app.get(
-//   '/login/google',
-//   passport.authenticate('google', { scope: ['email', 'profile'] })
-// );
-// app.get('/login/google', passport.authenticate('google'));
 // app.get(
 //   'api/session/oauth/google',
 //   passport.authenticate('google', {

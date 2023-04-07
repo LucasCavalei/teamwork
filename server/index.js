@@ -1,5 +1,4 @@
 import { app } from './app.js';
-import { db } from './utils/database';
 app.listen(8888, () => {
   console.log('8888 port connectado');
 });

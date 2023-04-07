@@ -5,40 +5,9 @@ import morgan from 'morgan';
 import userRoute from './routes/userRoute.js';
 import tasksRoute from './routes/tasksRoute.js';
 import passport from 'passport';
-import GoogleStrategy from 'passport-google-oauth20';
 import session from 'express-session';
-// import { passport } from '../server/utils/googleAuth';
-
-passport.serializeUser(function (user, done) {
-  // done(null, user.id);
-  done(null, user);
-});
-
-passport.deserializeUser(function (obj, done) {
-  // Users.findById(obj, done);
-  done(null, obj);
-});
-
-const GOOGLE_CLIENT_ID =
-  '700452773389-6pcr1neof2gv152ifnl3consi7rc4fdt.apps.googleusercontent.com';
-const GOOGLE_CLIENT_SECRET = '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';
-
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: GOOGLE_CLIENT_ID,
-      clientSecret: GOOGLE_CLIENT_SECRET,
-      // callbackURL: 'https://www.example.com/oauth2/redirect/google',
-      callbackURL: 'http://localhost:8888/auth/google/callback',
-      // callbackURL: "http://127.0.0.1:1337/api/session/oauth/google",
-      scope: ['profile'],
-      state: true,
-    },
-    (accessToken, refreshToken, profile, done) => {
-      console.log('Google OAuth strategy called with profile:', profile);
-    }
-  )
-);
+import { router as authUser } from './routes/user';
+import { router as loginWithGoogleRouter } from './routes/loginWithGoogle';
 
 /*EXPRESSS--------------------------*/
 const app = express();
@@ -46,49 +15,38 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, '../dist')));
 
+app.use(cors({ origin: 'http://localhost:8080', credentials: true }));
+
 app.use(
   session({
-    secret: 'your-secret-key-here',
+    secret: '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',
     resave: false,
     saveUninitialized: false,
   })
 );
-
-app.get('/', (req, res) => {
-  res.send(
-    '<a href="http://localhost:8888/auth/google">Autentique com Google</a>'
-  );
-});
-// app.get(
-//   '/auth/google',
-//   passport.authenticate('google', { scope: ['email', 'profile'] })
+// app.use(
+//   cookieSession({
+//     // name: 'session',
+//     maxAge: 24 * 60 * 60 * 1000,
+//     keys: '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',
+//   })
 // );
-app.get(
-  '/auth/google/callback',
-  passport.authenticate('google', {
-    // failureRedirect: '/login'
-  }),
-  function (req, res) {
-    // Authenticated successfully
-    res.redirect('/');
-  }
-);
+// app.use(passport.initialize());
+app.use(passport.session());
+// DEPOIS TENTAR SUBSTITUIR ESSE DE CIMA  POR ESSE ABAIXO
 
-app.get(
-  '/auth/google',
-  passport.authenticate('google', { scope: ['openid email profile'] })
-);
+app.use(loginWithGoogleRouter);
+app.use(authUser);
 
-// app.get('/account', ensureAuthenticated, function(req, res) {
-//   res.render('account', {
-//     user: req.user
-//   });
-// })
-
+// app.use(
+//   cors({
+//     origin: 'https://localhost:8080',
+//     methods: 'GET,POST,PUT,DELETE',
+//     credentials: true,
+//   })
+// );
 app.use(morgan('tiny'));
 app.use('/user', userRoute);
 app.use('/tasks', tasksRoute);
-app.use(passport.initialize());
-app.use(passport.session());
 
 export { app };
