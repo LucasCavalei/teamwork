@@ -37,6 +37,7 @@ app.use(passport.session());
 
 app.use(loginWithGoogleRouter);
 app.use(authUser);
+app.use(express.static(path.join(__dirname, '../dist')));
 
 // app.use(
 //   cors({
