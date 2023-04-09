@@ -26,7 +26,7 @@ export const Signup = () => {
     if (response && response.data) {
       dispatch(setIsAuthenticated(true));
       dispatch(setAuthUser(response.data));
-      // navigate('/');
+      navigate('/');
     }
   };
 
