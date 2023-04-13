@@ -2,8 +2,9 @@ import mysql from 'mysql';
 import dotenv from 'dotenv';
 
 dotenv.config();
-
-const connection = mysql.createConnection(process.env.URLRailway);
+const URL = process.env.URLRailway;
+console.log('SOU URL RAILWAY', URL);
+const connection = mysql.createConnection(URL);
 // const connection = mysql.createConnection({
 //   host: process.env.DB_HOST,
 //   user: process.env.DB_USER,
