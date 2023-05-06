@@ -6,7 +6,9 @@
   "scripts": {
     "start": "nodemon --exec babel-node server/index.js",
     "dev": "cross-env NODE_ENV=development webpack serve  --config config/webpack.dev.js",
-    "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js"
+    "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js",
+    "predeploy": "railway init",
+    "deploy": "railway deploy"
   },
   "keywords": [],
   "author": "",

@@ -8,39 +8,27 @@ import passport from 'passport';
 import session from 'express-session';
 import { router as authUser } from './routes/user';
 import { router as loginWithGoogleRouter } from './routes/loginWithGoogle';
+import dotenv from 'dotenv';
 
-/*EXPRESSS--------------------------*/
+dotenv.config();
+
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, '../dist')));
-
 app.use(cors({ origin: 'http://localhost:8080', credentials: true }));
-
-app.use(cors({ origin: 'http://localhost:8080', credentials: true }));
-
 app.use(
   session({
-    secret: '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',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
   })
 );
-// app.use(
-//   cookieSession({
-//     // name: 'session',
-//     maxAge: 24 * 60 * 60 * 1000,
-//     keys: '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',
-//   })
-// );
-// app.use(passport.initialize());
 app.use(passport.session());
 // DEPOIS TENTAR SUBSTITUIR ESSE DE CIMA  POR ESSE ABAIXO
-
 app.use(loginWithGoogleRouter);
 app.use(authUser);
 app.use(express.static(path.join(__dirname, '../dist')));
-
 // app.use(
 //   cors({
 //     origin: 'https://localhost:8080',

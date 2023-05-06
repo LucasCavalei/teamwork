@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './App.js';
 import { store } from './src/redux/store';
-import { persistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 const rootElement = document.getElementById('root');

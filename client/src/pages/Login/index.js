@@ -1,23 +1,52 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 import apiService from '../../services/apiService';
 import GoogleButton from 'react-google-button';
 import { useSelector, useDispatch } from 'react-redux';
 import { setIsAuthenticated, setAuthUser } from '../../redux/authSlice';
-import { Link, useNavigate } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 import './index.scss';
-export const Signup = () => {
+
+export const Login = () => {
   const { register, handleSubmit } = useForm();
+
+  //the user, esta dentro do configureStore authUser, Está no initialState
+  const { authUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const fetchAuthUser = async () => {
+    try {
+      const response = await apiService.fetchAuthUserBackend();
+      console.log('Response from fetchAuthUser:', response);
+      dispatch(setIsAuthenticated(true));
+      dispatch(setAuthUser(response));
+      navigate('/');
+
+      // Check if the response data is valid before dispatching actions and navigating
+      if (
+        response &&
+        response.data &&
+        Object.keys(response.data).length !== 0
+      ) {
+      } else {
+        // If the response data is invalid, show an error message or redirect to the login page
+        console.log('Error: invalid response data');
+        // Add your own code here to handle the error
+      }
+    } catch (err) {
+      console.log('Error fetching authenticated user', err);
+      dispatch(setIsAuthenticated(false));
+      dispatch(setAuthUser(null));
+    }
+  };
 
   const redirectToGoogleSSO = async () => {
     // in typescript
     // let timer: NodeJS.Timeout | null = null;
+
     let timer = null;
-    const googleLoginURL = 'http://localhost:8888/auth/google';
     const newWindow = window.open(
-      googleLoginURL,
+      apiService.loginWithGoogle(),
       '_blank',
       'width=500,height=600'
     );
@@ -45,12 +74,9 @@ export const Signup = () => {
     };
     sendData(userData);
   };
+
   return (
     <div className="container">
-      {/* <p>User: {eyuser}</p> */}
-      <button className="outro" onClick={redirectToGoogleSSO}>
-        outro
-      </button>
       <form className="signup-form" onSubmit={handleSubmit(onSubmit)}>
         <h1>Hello!</h1>
         <label>Your Name: </label>
@@ -69,7 +95,7 @@ export const Signup = () => {
         <button className="button button1" type="submit">
           Entrar
         </button>
-        <GoogleButton />
+        <GoogleButton onClick={redirectToGoogleSSO} />
       </form>
     </div>
   );

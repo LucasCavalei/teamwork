@@ -1,8 +1,8 @@
 {
   "configurations": [
     {
-      "type": "pwa-chrome",
-      "name": "http://localhost:8080/",
+      "type": "chrome",
+      "name": "run chrome",
       "request": "launch",
       "url": "http://localhost:8080/"
     }

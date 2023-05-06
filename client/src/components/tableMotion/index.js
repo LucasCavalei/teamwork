@@ -38,11 +38,12 @@ export const TableMotion = ({ apiService }) => {
       setResponse([...response, returnedTask]);
     } catch (err) {
       throw new Error('erro ao postar');
-      // setResponse([...response, taskData]);
     }
   };
   function handleClick() {
     inputRef.current.focus();
+    setName('');
+    setDescription(' ');
   }
 
   const backgroundColor = [
@@ -51,13 +52,13 @@ export const TableMotion = ({ apiService }) => {
   ];
 
   return (
-    <div className="table-container-accordion">
+    <div className="table-container-accordion" style={{ width: '700px' }}>
       <Fab color="primary" aria-label="add" onClick={handleClick}>
         <AddIcon />
       </Fab>
       {response
         .map((res, index) => (
-          <Accordion key={res.id} style={{ maxWidth: '700px' }}>
+          <Accordion key={res.id} style={{ with: '700px' }}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
@@ -85,14 +86,14 @@ export const TableMotion = ({ apiService }) => {
         .reverse()}
       <TextField
         id="standard-basic"
-        label="Standard"
+        label="new task"
         variant="standard"
         inputRef={inputRef}
         onChange={(event) => setName(event.target.value)}
       />
       <TextField
         id="outlined-basic"
-        label="Nova Tarefa"
+        label="New task"
         variant="outlined"
         style={{ width: '100%' }}
         onChange={(event) => setDescription(event.target.value)}
