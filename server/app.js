@@ -15,7 +15,6 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use(express.static(path.join(__dirname, '../dist')));
 app.use(cors({ origin: 'http://localhost:8080', credentials: true }));
 app.use(
   session({

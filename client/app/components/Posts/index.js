@@ -16,20 +16,6 @@ export const Post = () => {
     '(180deg, #BB67FF 0%, #C484F3 100%)',
   ];
 
-  // return (
-  //   <div className="post-container">
-  //     {data.map((res, index) => (
-  //       <h3
-  //         className="post-text"
-  //         style={{
-  //           backgroundImage: backgroundColor[index % backgroundColor.length],
-  //         }}
-  //       >
-  //         {res.text}
-  //       </h3>
-  //     ))}
-  //   </div>
-  // );
   return (
     <div className="post-container">
       <TableContainer

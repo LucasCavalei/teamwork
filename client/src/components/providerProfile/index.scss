@@ -1,18 +1,20 @@
 .providerProfile {
-  width: 70px;
-  height: 70px;
+  width: 80px;
+  height: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin: 0 0 0 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .provider-image {
   width: 60px;
   height: 60px;
   border-radius: 50% 50% 50% 50%;
-  border-top-left-radius: 15px;
   margin-bottom: 10px;
   margin-top: 50px;
+  border: solid 5px rgb(238, 176, 187);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
