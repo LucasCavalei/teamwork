@@ -8,7 +8,7 @@ const user = new User();
 class UserController {
   async addUser(request, response) {
     const { name, email, password } = request.body;
-    console.log('name,email,password', name, email, password);
+    console.log('In controller addUser first', name, email, password);
 
     if (!email || !password) {
       response.status(400).send('Senha e email não podem estar em branco');
@@ -25,6 +25,10 @@ class UserController {
       password: hashedPassword,
     });
     const userToken = await auth.createToken(createdUser);
+    console.log(
+      'user token returned after created user still in cointroller before return to client',
+      userToken
+    );
     return response.status(200).send({ userToken });
   }
 }

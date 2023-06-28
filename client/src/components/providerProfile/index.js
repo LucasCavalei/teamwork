@@ -1,17 +1,37 @@
 import React, { useState } from 'react';
 import './index.scss';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 export const ProviderProfile = () => {
+  const dispatch = useDispatch();
   const { authUser: provider } = useSelector((state) => state.user);
+  const { logout } = useSelector((state) => state.user);
   const [isMouseOver, setIsMouseOver] = useState(false);
 
+  const buttonStyles = {
+    backgroundColor: '#fca311',
+    color: 'white',
+    padding: '10px 20px',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    float: 'left',
+    position: 'relative',
+    left: '10px',
+    top: '30px',
+  };
+  const handleLogout = () => {
+    // Call the logout action here
+    dispatch(logout()); // Assuming `logout` is the action to be dispatched
+  };
   const handleMouseEnter = () => {
     setIsMouseOver(true);
   };
 
   const handleMouseLeave = () => {
-    setIsMouseOver(false);
+    setTimeout(() => {
+      setIsMouseOver(false);
+    }, 2000);
   };
 
   if (!provider) {
@@ -35,7 +55,13 @@ export const ProviderProfile = () => {
         />
         <p style={{ margin: 0 }}>{provider._json.given_name}</p>
       </div>
-      {isMouseOver ? <button>Logout</button> : ''}
+      {isMouseOver ? (
+        <button style={buttonStyles} onClick={handleLogout}>
+          Logout
+        </button>
+      ) : (
+        ''
+      )}
     </div>
   );
 };
