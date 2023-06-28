@@ -63,7 +63,10 @@ export const Login = () => {
   };
 
   const sendData = async (userData) => {
-    await apiService.createUser(userData);
+    const response = await apiService.createUser(userData);
+    console.log('Response from createUser:', response);
+    dispatch(setIsAuthenticated(true));
+    dispatch(setAuthUser(response));
   };
 
   const onSubmit = (e) => {

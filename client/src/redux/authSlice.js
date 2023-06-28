@@ -18,7 +18,7 @@ const authSlice = createSlice({
     setAuthUser: (state, action) => {
       state.authUser = action.payload.data;
       {
-        console.log('sou atuhUser no reducer', state.authUser);
+        console.log(' authUser in reducer', state.authUser);
       }
     },
     logout: (state) => {

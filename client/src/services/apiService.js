@@ -10,6 +10,7 @@ const api = axios.create({
 });
 async function createUser(userData) {
   const response = await api.post('/user/signup', userData);
+  console.log('xxxxxxxxxxxxxxxxxxx-createUser', response);
   return response.data;
 }
 function loginWithGoogle() {
