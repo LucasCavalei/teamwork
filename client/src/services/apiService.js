@@ -1,4 +1,5 @@
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
 const API_BASE_URL = 'http://localhost:8888';
 
@@ -9,9 +10,10 @@ const api = axios.create({
   },
 });
 async function createUser(userData) {
-  const response = await api.post('/user/signup', userData);
-  console.log('xxxxxxxxxxxxxxxxxxx-createUser', response);
-  return response.data;
+  const TokenResponse = await api.post('/user/signup', userData);
+  const user = jwtDecode(TokenResponse.data);
+
+  return user;
 }
 function loginWithGoogle() {
   return API_BASE_URL + '/auth/google';

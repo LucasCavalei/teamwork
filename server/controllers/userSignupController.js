@@ -29,7 +29,7 @@ class UserController {
       'user token returned after created user still in cointroller before return to client',
       userToken
     );
-    return response.status(200).send({ userToken });
+    return response.status(200).send(userToken);
   }
 }
 

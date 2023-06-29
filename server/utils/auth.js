@@ -5,7 +5,7 @@ dotenv.config();
 
 class Authorization {
   async createToken(user) {
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ user }, process.env.JWT_SECRET, {
       expiresIn: '1h',
     });
     return token;

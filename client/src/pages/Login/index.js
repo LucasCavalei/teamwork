@@ -9,11 +9,11 @@ import './index.scss';
 
 export const Login = () => {
   const { register, handleSubmit } = useForm();
-
   //the user, esta dentro do configureStore authUser, Está no initialState
   const { authUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const fetchAuthUser = async () => {
     try {
       const response = await apiService.fetchAuthUserBackend();
@@ -62,11 +62,10 @@ export const Login = () => {
     }
   };
 
-  const sendData = async (userData) => {
+  const createUserHandle = async (userData) => {
     const response = await apiService.createUser(userData);
-    console.log('Response from createUser:', response);
-    dispatch(setIsAuthenticated(true));
     dispatch(setAuthUser(response));
+    dispatch(setIsAuthenticated(true));
   };
 
   const onSubmit = (e) => {
@@ -75,7 +74,7 @@ export const Login = () => {
       email: e.email,
       password: e.password,
     };
-    sendData(userData);
+    createUserHandle(userData);
   };
 
   return (
