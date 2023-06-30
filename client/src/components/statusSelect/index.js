@@ -1,11 +1,9 @@
 import * as React from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import taskService from '../../services/apiService';
-import axios from 'axios';
 
 export const StatusSelect = ({ data }) => {
   const [newStatus, setNewStatus] = React.useState('');
@@ -73,9 +71,7 @@ export const StatusSelect = ({ data }) => {
           <MenuItem value={'To Do'}>To Do</MenuItem>
           <MenuItem value={'In progress'}>In progress</MenuItem>
           <MenuItem value={'doing'}>doing</MenuItem>
-          {/* {minhaFunction()} */}
         </Select>
-        {/* <FormHelperText>Without label</FormHelperText> */}
       </FormControl>
     </div>
   );

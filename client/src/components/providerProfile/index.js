@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import './index.scss';
 import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../../redux/authSlice';
 
 export const ProviderProfile = () => {
   const dispatch = useDispatch();
   const { provider, authUser } = useSelector((state) => state.user);
-
-  const { logout } = useSelector((state) => state.user);
   const [isMouseOver, setIsMouseOver] = useState(false);
-
-  console.log('xxxxxxxxxxxxxxxx', authUser);
   const buttonStyles = {
     backgroundColor: '#fca311',
     color: 'white',
@@ -23,8 +20,7 @@ export const ProviderProfile = () => {
     top: '30px',
   };
   const handleLogout = () => {
-    // Call the logout action here
-    dispatch(logout()); // Assuming `logout` is the action to be dispatched
+    dispatch(logout());
   };
   const handleMouseEnter = () => {
     setIsMouseOver(true);
@@ -36,9 +32,9 @@ export const ProviderProfile = () => {
     }, 2000);
   };
 
-  // //   if (!googleProvider) {
-  // //     return null;
-  // //   }
+  if (!provider && !authUser) {
+    return null;
+  }
 
   return (
     <div>
@@ -49,12 +45,12 @@ export const ProviderProfile = () => {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            {/* <img
+            <img
               className="provider-image"
-              src={provider._json.picture}
-              alt={provider._json.name}
-            /> */}
-            {/* <p style={{ margin: 0 }}>{provider._json.given_name}</p> */}
+              src={provider.picture}
+              alt={provider.given_name}
+            />
+            <p style={{ margin: 0 }}>{provider.given_name}</p>
           </div>
           {isMouseOver && (
             <button style={buttonStyles} onClick={handleLogout}>
@@ -70,12 +66,7 @@ export const ProviderProfile = () => {
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
-              {/* <img
-                className="user-image"
-                src={user.picture}
-                alt={user.name}
-              /> */}
-              {/* <p style={{ margin: 0 }}>{authUser.name}</p> */}
+              <p style={{ margin: 0 }}>{authUser.user.name}</p>
             </div>
             {isMouseOver && (
               <button style={buttonStyles} onClick={handleLogout}>

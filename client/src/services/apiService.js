@@ -18,7 +18,7 @@ async function createUser(userData) {
 function loginWithGoogle() {
   return API_BASE_URL + '/auth/google';
 }
-async function fetchAuthUserBackend() {
+async function fetchAuthUser() {
   const response = await api.get('/auth/user', { withCredentials: true });
   return response;
 }
@@ -50,7 +50,7 @@ const apiService = {
   update: updateTask,
   delete: deleteTask,
   loginWithGoogle: loginWithGoogle,
-  fetchAuthUserBackend: fetchAuthUserBackend,
+  fetchAuthUser: fetchAuthUser,
 };
 
 export default apiService;

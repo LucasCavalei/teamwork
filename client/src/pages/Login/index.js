@@ -21,7 +21,6 @@ export const Login = () => {
   const AuthUserGoogleHandler = async () => {
     try {
       const response = await apiService.fetchAuthUser();
-      console.log('Response from fetchAuthUser:', response);
       dispatch(setIsAuthenticated(true));
       dispatch(setProvider(response));
       navigate('/');
@@ -45,7 +44,7 @@ export const Login = () => {
   };
 
   const redirectToGoogleSSO = async () => {
-    // in typescript
+    // in typescript set
     // let timer: NodeJS.Timeout | null = null;
 
     let timer = null;

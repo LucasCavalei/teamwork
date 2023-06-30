@@ -11,22 +11,20 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setProvider: (state, action) => {
-      state.provider = action.payload;
+      state.provider = action.payload.data;
     },
 
     setIsAuthenticated: (state, action) => {
-      // state.isAuthenticated = true;
       state.isAuthenticated = action.payload;
     },
     setAuthUser: (state, action) => {
       state.authUser = action.payload;
-      {
-        console.log(' authUser in reducer', state.authUser.user);
-      }
     },
     logout: (state) => {
+      state.provider = null;
       state.isAuthenticated = false;
       state.authUser = null;
+      // Perform any additional logic to clear user data or perform logout actions
     },
   },
 });
