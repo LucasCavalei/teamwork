@@ -15,7 +15,23 @@
 .signup-form input[type='password'] {
   border: none;
   border-bottom: 2px solid gray;
-  width: 100%;
+  width: 80%;
   padding: 10px;
   margin-bottom: 20px;
+}
+.button {
+  background-color: #c591c2;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  height: 65px;
+  width: 240px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  margin-top: 20px;
+}
+
+.button:hover {
+  background-color: #af7aac;
 }

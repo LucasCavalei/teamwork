@@ -20,3 +20,14 @@ export const store = configureStore({
     user: persistedReducer,
   },
 });
+
+//         '----------------------------------'
+// wihout persistence configuration it would be like JUST IT
+
+// const store = configureStore({
+//   reducer: {
+//     user: authSliceReducer,
+//   },
+// });
+
+// export default store;

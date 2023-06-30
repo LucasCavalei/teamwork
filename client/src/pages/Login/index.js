@@ -3,7 +3,11 @@ import { useForm } from 'react-hook-form';
 import apiService from '../../services/apiService';
 import GoogleButton from 'react-google-button';
 import { useSelector, useDispatch } from 'react-redux';
-import { setIsAuthenticated, setAuthUser } from '../../redux/authSlice';
+import {
+  setIsAuthenticated,
+  setAuthUser,
+  setProvider,
+} from '../../redux/authSlice';
 import { useNavigate } from 'react-router-dom';
 import './index.scss';
 
@@ -14,12 +18,12 @@ export const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const fetchAuthUser = async () => {
+  const AuthUserGoogleHandler = async () => {
     try {
-      const response = await apiService.fetchAuthUserBackend();
+      const response = await apiService.fetchAuthUser();
       console.log('Response from fetchAuthUser:', response);
       dispatch(setIsAuthenticated(true));
-      dispatch(setAuthUser(response));
+      dispatch(setProvider(response));
       navigate('/');
 
       // Check if the response data is valid before dispatching actions and navigating
@@ -36,7 +40,7 @@ export const Login = () => {
     } catch (err) {
       console.log('Error fetching authenticated user', err);
       dispatch(setIsAuthenticated(false));
-      dispatch(setAuthUser(null));
+      dispatch(setProvider(null));
     }
   };
 
@@ -55,7 +59,7 @@ export const Login = () => {
       timer = setInterval(() => {
         if (newWindow.closed) {
           console.log("Yay we're authenticated");
-          fetchAuthUser();
+          AuthUserGoogleHandler();
           if (timer) clearInterval(timer);
         }
       }, 500);
@@ -80,22 +84,21 @@ export const Login = () => {
   return (
     <div className="container">
       <form className="signup-form" onSubmit={handleSubmit(onSubmit)}>
-        <h1>Hello!</h1>
-        <label>Your Name: </label>
-        {console.log('Your xx Name', authUser)}
+        <h1>Wellcome!</h1>
+        <label>Your Name </label>
         <input type="text" {...register('name')} placeholder="Enter you name" />
         <label> Email </label>
         <input
           type="text"
           {...register('email')}
-          placeholder="you email adress here"
+          placeholder="Your email adress here"
         />
         <label> Password </label>
         <input type="password" {...register('password')} />
         <label> Confirm password</label>
         <input type="password" {...register('password')} />
         <button className="button button1" type="submit">
-          Entrar
+          Continue
         </button>
         <GoogleButton onClick={redirectToGoogleSSO} />
       </form>
