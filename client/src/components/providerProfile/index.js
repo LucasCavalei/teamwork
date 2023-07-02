@@ -48,9 +48,9 @@ export const ProviderProfile = () => {
             <img
               className="provider-image"
               src={provider.picture}
-              alt={provider.given_name}
+              alt={provider.firstName}
             />
-            <p style={{ margin: 0 }}>{provider.given_name}</p>
+            <p style={{ margin: 0 }}>{provider.firstName}</p>
           </div>
           {isMouseOver && (
             <button style={buttonStyles} onClick={handleLogout}>

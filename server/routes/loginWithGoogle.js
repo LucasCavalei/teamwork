@@ -19,7 +19,7 @@ router.get(
 router.get('/auth/google', (req, res, next) => {
   console.log('Before passport.authenticate()');
   passport.authenticate('google', {
-    scope: ['profile'],
+    scope: ['profile', 'email'],
   })(req, res, next);
   console.log('After passport.authenticate()');
 });

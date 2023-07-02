@@ -3,9 +3,16 @@ import { isUserAuthenticated } from '../middlewares/auth';
 const router = express.Router();
 
 router.get('/auth/user', isUserAuthenticated, (req, res) => {
-  const { sub, given_name, email, picture } = req.user._json;
-  const userData = { sub, given_name, email, picture };
-  res.json(userData);
+  const { firstName, fullName, email, picture } = req.user;
+
+  const user = {
+    firstName,
+    fullName,
+    email,
+    picture,
+  };
+
+  res.json(user);
 });
 
 export { router };

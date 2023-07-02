@@ -12,6 +12,7 @@ const authSlice = createSlice({
   reducers: {
     setProvider: (state, action) => {
       state.provider = action.payload.data;
+      console.log('provider state in authSlic', state.provider);
     },
 
     setIsAuthenticated: (state, action) => {
