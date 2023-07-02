@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
+import hightFiveGif from '../../assets/loader.gif';
 
 export function LoginSuccess() {
   useEffect(() => {
@@ -7,5 +8,13 @@ export function LoginSuccess() {
     }, 1000);
   }, []);
 
-  return <div>Thanks for loggin in!</div>;
+  return (
+    <div>
+      <img
+        src={hightFiveGif}
+        alt="GIF"
+        style={{ width: '300px', height: '300px' }}
+      />
+    </div>
+  );
 }

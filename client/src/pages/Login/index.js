@@ -13,8 +13,6 @@ import './index.scss';
 
 export const Login = () => {
   const { register, handleSubmit } = useForm();
-  //the user, esta dentro do configureStore authUser, Está no initialState
-  const { authUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -46,12 +44,15 @@ export const Login = () => {
   const redirectToGoogleSSO = async () => {
     // in typescript set
     // let timer: NodeJS.Timeout | null = null;
-
     let timer = null;
+    const width = 500;
+    const height = 600;
+    const left = window.innerWidth / 2 - width / 2;
+    const top = window.innerHeight / 2 - height / 2;
     const newWindow = window.open(
       apiService.loginWithGoogle(),
       '_blank',
-      'width=500,height=600'
+      `width=${width},height=${height},top=${top},left=${left}`
     );
 
     if (newWindow) {
