@@ -62,8 +62,5 @@ passport.use(
     }
   )
 );
-const saveUserToDatabase = (userData) => {
-  // close the database connection
-  // connection.end();
-};
+
 export default passport;

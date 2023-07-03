@@ -30,3 +30,11 @@
 .table-container-accordion::-webkit-scrollbar-thumb:hover {
   background-color: #aaa;
 }
+.gif-link img {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.gif-link:hover img {
+  opacity: 1;
+}

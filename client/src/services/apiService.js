@@ -12,7 +12,6 @@ const api = axios.create({
 async function createUser(userData) {
   const TokenResponse = await api.post('/user/signup', userData);
   const user = jwtDecode(TokenResponse.data);
-
   return user;
 }
 function loginWithGoogle() {

@@ -37,11 +37,8 @@ export const StatusSelect = ({ data }) => {
       console.log('chegoyu aqui');
     } catch (err) {
       throw new Error('erro ao postar', err);
-      // setResponse([...response, tasksData]);
     }
-    // setNewStatus(status);
   };
-  // const minhafunction = () => {};
   return (
     <div>
       <FormControl

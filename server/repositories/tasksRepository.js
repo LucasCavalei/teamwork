@@ -67,6 +67,25 @@ class Task {
       }
     });
   }
+  delete(req, res) {
+    const id = req.params.id;
+    console.log('req.params.id chegouuuu no repo', id);
+    const DELETE_TASK_QUERY = 'DELETE FROM task_table WHERE id = ?';
+
+    try {
+      connection.query(DELETE_TASK_QUERY, [id], (err, result) => {
+        if (err) {
+          return res.send(err);
+        } else {
+          console.log('Deleted task with ID:', id);
+          return res.send(`Task with ID ${id} deleted successfully.`);
+        }
+      });
+    } catch (err) {
+      res.status(500).send('Error while deleting task');
+    }
+  }
+
   //   // close the connection to the database
   //   connection.end((err) => {
   //     if (err) throw err;
