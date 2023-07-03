@@ -11,6 +11,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { StatusSelect } from '../../components/statusSelect';
+import { Tooltip } from '@mui/material';
 import xmark from '../assets/xmark.gif';
 
 export const TableMotion = ({ apiService }) => {
@@ -99,15 +100,17 @@ export const TableMotion = ({ apiService }) => {
                       className="gif-link"
                       onClick={() => deleteTask(res.id)}
                     >
-                      <img
-                        src={xmark}
-                        alt="GIF"
-                        style={{
-                          width: '50px',
-                          height: '50px',
-                          float: 'right',
-                        }}
-                      />
+                      <Tooltip title="delete">
+                        <img
+                          src={xmark}
+                          alt="GIF"
+                          style={{
+                            width: '50px',
+                            height: '50px',
+                            float: 'right',
+                          }}
+                        />
+                      </Tooltip>
                     </a>
                   </div>
                   {res.description}
