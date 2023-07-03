@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import './index.scss';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import TextField from '@mui/material/TextField';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
-import './index.scss';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -20,11 +22,13 @@ export const TableMotion = ({ apiService }) => {
   useEffect(() => {
     getData();
   }, []);
+
   //get all tasks
   const getData = async () => {
     const tasksList = await apiService.getAllTasks();
     setTasks(tasksList);
   };
+
   //create new Task
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -42,6 +46,7 @@ export const TableMotion = ({ apiService }) => {
       throw new Error('erro ao postar');
     }
   };
+
   //delete task
   const deleteTask = async (id) => {
     try {
@@ -109,9 +114,16 @@ export const TableMotion = ({ apiService }) => {
                 </Typography>
                 <StatusSelect data={res} />
                 <Typography
-                  style={{ wordWrap: 'break-word', overflowWrap: 'break-word' }}
+                  style={{
+                    wordWrap: 'break-word',
+                    overflowWrap: 'break-word',
+                    fontFamily: 'Calibri, Arial, sans-serif',
+                    fontSize: '14px',
+                  }}
                 >
-                  {res.created_at}
+                  {format(new Date(res.created_at), 'dd MMMM yyyy', {
+                    locale: ptBR,
+                  })}
                 </Typography>
               </Typography>
             </AccordionDetails>

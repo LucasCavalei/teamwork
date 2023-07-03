@@ -45,11 +45,11 @@ export const StatusSelect = ({ data }) => {
         sx={{ m: 1, minWidth: 120 }}
         style={{
           backgroundColor:
-            newStatus === 'To Do'
+            newStatus === 'to do'
               ? 'orange'
-              : newStatus === 'doing'
+              : newStatus === 'in progress'
               ? 'pink'
-              : newStatus === 'In progress'
+              : newStatus === 'completed'
               ? 'grey'
               : null,
         }}
@@ -65,9 +65,9 @@ export const StatusSelect = ({ data }) => {
           displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}
         >
-          <MenuItem value={'To Do'}>To Do</MenuItem>
-          <MenuItem value={'In progress'}>In progress</MenuItem>
-          <MenuItem value={'doing'}>doing</MenuItem>
+          <MenuItem value={'to do'}>To Do</MenuItem>
+          <MenuItem value={'in progress'}>In progress</MenuItem>
+          <MenuItem value={'completed'}>completed</MenuItem>
         </Select>
       </FormControl>
     </div>
