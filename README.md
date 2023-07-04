@@ -44,15 +44,14 @@ New functionalities will be implemented soon.
 clone this repository
 https://github.com/LucasCavalei/teamwork.git
 
-### server:
+### server
 
 npm install / npm start
 
 ### client
-
-2.cd client
-1.npm install
-2.npm start
+cd client
+npm install
+npm start
 
 
 
