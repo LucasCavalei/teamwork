@@ -13,6 +13,13 @@ Only the user who created the task can delete it.
 Tasks can be saved as long as the user is logged in.
 New functionalities will be implemented soon.
 
+### Sequence diagram (Draw.io)
+
+![Alt Text](/client/src/components/assets/diagramTeamWork.jpg)
+
+ ### Preview
+ <img src="/client/src/components/assets/preViewGif.gif" alt="Alt Text"> 
+
 ### 🛰️ Built With
 
 - React JS
@@ -28,13 +35,6 @@ New functionalities will be implemented soon.
 - LottieFiles
 - ToolTip
 - Draw.Io
-
-### Sequence diagram (Draw.io)
-
-![Alt Text](/client/src/components/assets/diagramTeamWork.jpg)
-
- ### Preview
- <img src="/client/src/components/assets/preViewGif.gif" alt="Alt Text"> 
 
 
 
